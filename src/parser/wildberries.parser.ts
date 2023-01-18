@@ -15,9 +15,12 @@ import { plainToInstance } from 'class-transformer';
 import { IRawProductInfo } from './interfaces/raw-product-info.interface';
 
 export class WildberriesParser implements IParser {
-  async getItems(searchString: string): Promise<ProductInfoDto[] | null> {
+  async getItems(
+    searchString: string,
+    scroll: boolean,
+  ): Promise<ProductInfoDto[] | null> {
     try {
-      const page = await this.configureBrowser(searchString);
+      const page = await this.configureBrowser(searchString, scroll);
       const promoProducts = await this.getPromoProducts(page);
 
       return promoProducts.map((product) =>
@@ -26,16 +29,26 @@ export class WildberriesParser implements IParser {
         }),
       );
     } catch (err) {
+      console.log(err);
       return null;
     }
   }
 
-  private async configureBrowser(searchString: string): Promise<Page> {
-    const browser = await puppeteer.launch();
+  private async configureBrowser(
+    searchString: string,
+    scroll: boolean,
+  ): Promise<Page> {
+    const browser = await puppeteer.launch({
+      headless: true,
+      args: ['--no-sandbox'],
+    });
     const page = await browser.newPage();
     await page.goto(SITE_URL + searchString);
     await page.waitForSelector(PRODUCTS_CARD_LIST_SELECTOR);
-    await this.autoScroll(page);
+
+    if (scroll) {
+      await this.autoScroll(page);
+    }
 
     return page;
   }

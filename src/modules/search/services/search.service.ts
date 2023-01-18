@@ -13,6 +13,6 @@ export class SearchService implements OnModuleInit {
   }
 
   public async getProducts(dto: SearchProductsDto) {
-    return await this.parserInstance.getItems(dto.search);
+    return await this.parserInstance.getItems(dto.search, dto.scroll);
   }
 }
