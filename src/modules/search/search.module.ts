@@ -6,6 +6,7 @@ const controllers = [SearchController];
 const services = [SearchService];
 
 @Module({
+  imports: [],
   controllers: [...controllers],
   providers: [...services],
 })
