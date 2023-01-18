@@ -11,7 +11,8 @@ export class SearchProductsDto {
   search: string;
 
   @ApiProperty({
-    type: 'string',
+    type: 'enum',
+    enum: ['true', '1'],
     default: null,
     description:
       'Boolean-like флаг. Нужен что бы определить, нужно ли скроллить страницу до конца (задеплоенная версия упадет в таймаут, юзать только локально)',
