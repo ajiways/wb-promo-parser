@@ -12,9 +12,9 @@ export class SearchProductsDto {
 
   @ApiProperty({
     type: 'string',
-    default: 'false',
+    default: null,
     description:
-      'Boolean-like флаг. Нужен что бы определить, нужно ли скроллить страницу до конца',
+      'Boolean-like флаг. Нужен что бы определить, нужно ли скроллить страницу до конца (задеплоенная версия упадет в таймаут, юзать только локально)',
     required: false,
   })
   @IsOptional()
